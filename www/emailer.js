@@ -31,7 +31,7 @@ var exec = require('cordova/exec'),
  */
 module.exports = function (successCallback, errorCallback, message, forceAsync) {
    
-    var action = 'updateTo';
+    var action = 'emailer';
     var messageIsMultipart = (utils.typeName(message) == "Array");
     var args = messageIsMultipart ? message : [message];
 
@@ -49,13 +49,5 @@ module.exports = function (successCallback, errorCallback, message, forceAsync) 
         action += 'Async';
     }
 
-    exec(successCallback, errorCallback, "Version", action, args);
-};
-
-module.exports.bulkEcho = function(payload, delay, callback) {
-    exec(callback, null, "Version", "echoBulk", [payload, delay]);
-};
-
-module.exports.stopBulkEcho = function() {
-    exec(null, null, "Version", "stopEchoBulk", []);
+    exec(successCallback, errorCallback, "Emailer", action, args);
 };

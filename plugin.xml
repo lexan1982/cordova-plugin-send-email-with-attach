@@ -20,19 +20,19 @@
 -->
 
 <plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
-           id="com.ideateam.plugin.version"
+           id="com.ideateam.plugin.emailer"
       version="0.1.0">
-    <name>Version</name>
+    <name>Emailer</name>
 
-    <js-module src="www/version.js" name="version">
-        <clobbers target="cordova.version" />
+    <js-module src="www/emailer.js" name="emailer">
+        <clobbers target="cordova.emailer" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Version" >
-              <param name="android-package" value="com.ideateam.plugin.Version"/>
+            <feature name="Emailer" >
+              <param name="android-package" value="com.ideateam.plugin.emailer"/>
               <param name="onload" value="true" />
             </feature>
         </config-file>
@@ -48,7 +48,7 @@
         <uses-permission android:name="android.permission.BROADCAST_STICKY" />
         <uses-permission android:name="android.permission.GET_ACCOUNTS" />
       </config-file>
-        <source-file src="src/android/Version.java" target-dir="src/com/ideateam/plugin" />
+        <source-file src="src/android/Emailer.java" target-dir="src/com/ideateam/plugin" />
     </platform>
 
   
