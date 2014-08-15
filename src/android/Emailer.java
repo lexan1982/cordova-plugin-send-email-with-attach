@@ -53,11 +53,11 @@ public class Emailer extends CordovaPlugin {
      * @param callbackContext   The callback context from which we were invoked.
      */
     @SuppressLint("NewApi") 
-    public boolean execute(String action, final JSONObject obj, final CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (action.equals("emailer")) {
 
         	Log.d(TAG, "..action == emailer" );
-        	Log.d(TAG, obj.toString());
+        	Log.d(TAG, args.getString(0));
         	
         	if(!isOnline()){
         		Log.d(TAG, ".. no internet connetion");
@@ -65,7 +65,10 @@ public class Emailer extends CordovaPlugin {
         		 
         	}else{
         		
-        		Log.d(TAG, ".. prepare letter");
+        		
+        		
+        		JSONObject obj = new JSONObject(args.getString(0));
+        		
         		String mail = obj.getString("mail");
         		Log.d(TAG, mail);
         		String subject = obj.getString("subject");
@@ -103,13 +106,12 @@ public class Emailer extends CordovaPlugin {
     	
     	  Intent intent = new Intent(Intent.ACTION_SEND);    
     	  intent.setType("text/plain");      
-    	  intent.putExtra(Intent.EXTRA_SUBJECT, email);
+    	  intent.putExtra(Intent.EXTRA_EMAIL, new String[] { email } );
     	  intent.putExtra(Intent.EXTRA_SUBJECT, subject);      
-    	  intent.putExtra(Intent.EXTRA_STREAM, attachPath);      
+    	  intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(attachPath));      
     	  intent.putExtra(Intent.EXTRA_TEXT, text);         
          
-    	  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
-
+    	 
     	  this.cordova.getActivity().startActivity(Intent.createChooser(intent,
     	            "Send email..."));
     	 
