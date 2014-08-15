@@ -32,6 +32,6 @@ Call function <b>cordova.emailer</b> from js code with params:
   <i>callback</i> - success function<br/>
   <i>error</i> - error function<br/>
   <i>mail</i> - json object: 
-  <pre>{ mail: 'mail@mail.com', subject: 'Report', text: 'Hello.<br/>Calendar plan in attach.', attachPath: 'file:///mnt/card/fileNmae'}</pre>
+  <pre>{ mail: 'mail@mail.com', subject: 'Report', text: 'Hello.<br/>Calendar plan in attach.', attachPath: 'file:///mnt/card/fileName' }</pre>
   
   <a href="http://cordova.apache.org/docs/en/3.5.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide">Cordova docs</a>
