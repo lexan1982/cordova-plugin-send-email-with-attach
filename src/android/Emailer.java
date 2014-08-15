@@ -83,7 +83,7 @@ public class Emailer extends CordovaPlugin {
         if (action.equals("emailer")) {
 
         	Log.d("CordovaPlugin ", "..action == emailer" );
-
+		Log.d("CordovaPlugin ", args.getString(0) );
 	
         	//updateToVersion();
         	
