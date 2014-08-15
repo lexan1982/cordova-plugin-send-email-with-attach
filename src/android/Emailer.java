@@ -19,41 +19,21 @@ under the License.
 
 package com.ideateam.plugin;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaActivity;
-import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.res.AssetManager;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.util.Base64;
 import android.util.Log;
 
@@ -61,13 +41,14 @@ import android.util.Log;
 * This class exposes methods in Cordova that can be called from JavaScript.
 */
 public class Emailer extends CordovaPlugin {
-	 public static final int DIALOG_DOWNLOAD_PROGRESS = 0;
+
+	 private String TAG = "CordovaPlugin Emailer";
+	 
 	 private String url;
 	 private String remoteVersion;
 	 private String remoteChecksum;
 	 private String zipChecksum;
 	 private Activity activity;
-	 
 	 private ProgressDialog mProgressDialog;
      private volatile boolean bulkEchoing;
      
@@ -82,13 +63,29 @@ public class Emailer extends CordovaPlugin {
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (action.equals("emailer")) {
 
-        	Log.d("CordovaPlugin ", "..action == emailer" );
-		Log.d("CordovaPlugin ", args.getString(0) );
-	
-        	//updateToVersion();
+        	Log.d(TAG, "..action == emailer" );
+        	Log.d(TAG, args.getString(0));
         	
-          // FIXME succes callback  
-          //  callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, args.getString(0)));
+        	if(!isOnline()){
+        		Log.d(TAG, ".. no internet connetion");
+        		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "No Internet Connection"));
+        		 
+        	}else{
+        		
+        		JSONObject obj = args.getJSONObject(0);
+        		String mail = obj.getString("mail");
+        		String subject = obj.getString("subject");
+        		String text = obj.getString("text");
+        		String attachPath = obj.getString("attachPath");
+        		
+        		SendEmail(mail, subject, text, attachPath);
+        		
+        		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Mail sended"));
+        		
+        	}
+        	
+        	
+          
         } else if(action.equals("echoAsync")) {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 public void run() {
@@ -137,5 +134,27 @@ public class Emailer extends CordovaPlugin {
         }
         return true;
     }
-    
+    private boolean isOnline() {
+    	  ConnectivityManager cm = (ConnectivityManager) this.cordova.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+    	  NetworkInfo ni = cm.getActiveNetworkInfo();
+    	  if (ni == null) {
+    	   // There are no active networks.
+    	   return false;
+    	  } else
+    	   return true;
+    }
+    private void SendEmail(String email, String subject, String text, String attachPath){
+    	  Intent intent = new Intent(Intent.ACTION_SENDTO);    
+    	  intent.setType("text/plain");      
+    	  intent.putExtra(Intent.EXTRA_SUBJECT, email);
+    	  intent.putExtra(Intent.EXTRA_SUBJECT, subject);      
+    	  intent.putExtra(Intent.EXTRA_STREAM, attachPath);      
+    	  intent.putExtra(Intent.EXTRA_TEXT, text);         
+         
+    	  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
+
+    	  this.cordova.getActivity().startActivity(intent);
+    	 // activity.finish();
+    	
+    }
 }
