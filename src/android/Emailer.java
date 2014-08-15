@@ -43,14 +43,7 @@ import android.util.Log;
 public class Emailer extends CordovaPlugin {
 
 	 private String TAG = "CordovaPlugin Emailer";
-	 
-	 private String url;
-	 private String remoteVersion;
-	 private String remoteChecksum;
-	 private String zipChecksum;
-	 private Activity activity;
-	 private ProgressDialog mProgressDialog;
-     private volatile boolean bulkEchoing;
+ 
      
      /**
      * Executes the request and returns PluginResult.
@@ -72,6 +65,7 @@ public class Emailer extends CordovaPlugin {
         		 
         	}else{
         		
+        		Log.d(TAG, ".. prepare letter");
         		JSONObject obj = args.getJSONObject(0);
         		String mail = obj.getString("mail");
         		String subject = obj.getString("subject");
@@ -106,29 +100,7 @@ public class Emailer extends CordovaPlugin {
             });
         } else if(action.equals("echoMultiPart")) {
             callbackContext.sendPluginResult( new PluginResult(PluginResult.Status.OK, args.getJSONObject(0)));
-        } else if(action.equals("stopEchoBulk")) {
-            bulkEchoing = false;
-        } else if(action.equals("echoBulk")) {
-            if (bulkEchoing) {
-                return true;
-            }
-            final String payload = args.getString(0);
-            final int delayMs = args.getInt(1);
-            bulkEchoing = true;
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    while (bulkEchoing) {
-                        try {
-                            Thread.sleep(delayMs);
-                        } catch (InterruptedException e) {}
-                        PluginResult pr = new PluginResult(PluginResult.Status.OK, payload);
-                        pr.setKeepCallback(true);
-                        callbackContext.sendPluginResult(pr);
-                    }
-                    PluginResult pr = new PluginResult(PluginResult.Status.OK, payload);
-                    callbackContext.sendPluginResult(pr);
-                }
-            });
+        
         } else {
             return false;
         }
@@ -144,7 +116,10 @@ public class Emailer extends CordovaPlugin {
     	   return true;
     }
     private void SendEmail(String email, String subject, String text, String attachPath){
-    	  Intent intent = new Intent(Intent.ACTION_SENDTO);    
+    	
+    	Log.d(TAG, ".." + email);
+    	
+    	  Intent intent = new Intent(Intent.ACTION_SEND);    
     	  intent.setType("text/plain");      
     	  intent.putExtra(Intent.EXTRA_SUBJECT, email);
     	  intent.putExtra(Intent.EXTRA_SUBJECT, subject);      
@@ -153,8 +128,9 @@ public class Emailer extends CordovaPlugin {
          
     	  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
 
-    	  this.cordova.getActivity().startActivity(intent);
-    	 // activity.finish();
+    	  this.cordova.getActivity().startActivity(Intent.createChooser(intent,
+    	            "Send email..."));
+    	 
     	
     }
 }
