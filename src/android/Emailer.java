@@ -53,11 +53,11 @@ public class Emailer extends CordovaPlugin {
      * @param callbackContext   The callback context from which we were invoked.
      */
     @SuppressLint("NewApi") 
-    public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, final JSONObject obj, final CallbackContext callbackContext) throws JSONException {
         if (action.equals("emailer")) {
 
         	Log.d(TAG, "..action == emailer" );
-        	Log.d(TAG, args.getString(0));
+        	Log.d(TAG, obj.toString());
         	
         	if(!isOnline()){
         		Log.d(TAG, ".. no internet connetion");
@@ -66,8 +66,6 @@ public class Emailer extends CordovaPlugin {
         	}else{
         		
         		Log.d(TAG, ".. prepare letter");
-        		JSONObject obj = args.getJSONObject(0);
-        		Log.d(TAG, obj.toString());
         		String mail = obj.getString("mail");
         		Log.d(TAG, mail);
         		String subject = obj.getString("subject");
@@ -85,28 +83,7 @@ public class Emailer extends CordovaPlugin {
         	
         	
           
-        } else if(action.equals("echoAsync")) {
-            cordova.getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    callbackContext.sendPluginResult( new PluginResult(PluginResult.Status.OK, args.optString(0)));
-                }
-            });
-        } else if(action.equals("echoArrayBuffer")) {
-            String data = args.optString(0);
-            byte[] rawData= Base64.decode(data, Base64.DEFAULT);
-            callbackContext.sendPluginResult( new PluginResult(PluginResult.Status.OK, rawData));
-        } else if(action.equals("echoArrayBufferAsync")) {
-            cordova.getThreadPool().execute(new Runnable() {
-                public void run() {
-                    String data = args.optString(0);
-                    byte[] rawData= Base64.decode(data, Base64.DEFAULT);
-                    callbackContext.sendPluginResult( new PluginResult(PluginResult.Status.OK, rawData));
-                }
-            });
-        } else if(action.equals("echoMultiPart")) {
-            callbackContext.sendPluginResult( new PluginResult(PluginResult.Status.OK, args.getJSONObject(0)));
-        
-        } else {
+        }  else {
             return false;
         }
         return true;
