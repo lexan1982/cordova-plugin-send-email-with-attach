@@ -67,10 +67,15 @@ public class Emailer extends CordovaPlugin {
         		
         		Log.d(TAG, ".. prepare letter");
         		JSONObject obj = args.getJSONObject(0);
+        		Log.d(TAG, obj.toString());
         		String mail = obj.getString("mail");
+        		Log.d(TAG, mail);
         		String subject = obj.getString("subject");
+        		Log.d(TAG, subject);
         		String text = obj.getString("text");
+        		Log.d(TAG, text);
         		String attachPath = obj.getString("attachPath");
+        		Log.d(TAG, attachPath);
         		
         		SendEmail(mail, subject, text, attachPath);
         		
