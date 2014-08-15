@@ -19,15 +19,15 @@
 #
 -->
 
-cordova-update-www
+cordova-plugin-send-email-with-attach
 ------------------------
 
-This is a plugin implementation of the <b>UpdateTo Version</b> function which can download zip from url and replace <b>www</b> folder at the Cordova project.
+This is a plugin implementation of the <b>Emailer</b> function which call native Email sendler and can pass parametrs with file path which will be attached to the mail. 
 
 ------------------------
-Call function <b>cordova.version</b> from js code with params:
+Call function <b>cordova.emailer</b> from js code with params:
 
-  <pre>cordova.version(callback, error, updateTo);</pre>
+  <pre>cordova.emailer(callback, error, email);</pre>
   
   <i>callback</i> - success function<br/>
   <i>error</i> - error function<br/>
