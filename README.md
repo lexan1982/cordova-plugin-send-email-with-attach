@@ -31,6 +31,6 @@ Call function <b>cordova.emailer</b> from js code with params:
   
   <i>callback</i> - success function<br/>
   <i>error</i> - error function<br/>
-  <i>mail</i> - "mail@mail.com;, subject;, text;, file:///mnt/sdcard/attachFilePath"
+  <i>mail</i> - "mail@mail.com;| subject;| text;| file:///mnt/sdcard/attachFilePath"
   
   <a href="http://cordova.apache.org/docs/en/3.5.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide">Cordova docs</a>
