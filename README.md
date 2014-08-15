@@ -27,10 +27,10 @@ This is a plugin implementation of the <b>Emailer</b> function which call native
 ------------------------
 Call function <b>cordova.emailer</b> from js code with params:
 
-  <pre>cordova.emailer(callback, error, email);</pre>
+  <pre>cordova.emailer(callback, error, mail);</pre>
   
   <i>callback</i> - success function<br/>
   <i>error</i> - error function<br/>
-  <i>updateTo</i> - url to the zip. (It will be download and extract to the www folder)<br/> 
+  <i>mail</i> - "mail@mail.com;, subject;, text;, file:///mnt/sdcard/attachFilePath"
   
   <a href="http://cordova.apache.org/docs/en/3.5.0/guide_hybrid_plugins_index.md.html#Plugin%20Development%20Guide">Cordova docs</a>
