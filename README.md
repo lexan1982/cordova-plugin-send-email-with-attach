@@ -25,6 +25,13 @@ cordova-plugin-send-email-with-attach
 This is a plugin implementation of the <b>Emailer</b> function which call native Email sendler and can pass parametrs with file path which will be attached to the mail. 
 
 ------------------------
+Installation for Android
+
+Execute in CordovaCLI:
+<pre>cordova create myApp com.name.product MyAPP</pre>
+<pre>cordova pllatform add android</pre>
+<pre>cordova plugin add https://github.com/lexan1982/cordova-plugin-send-email-with-attach</pre>
+------------------------
 Call function <b>cordova.emailer</b> from js code with params:
 
   <pre>cordova.emailer(callback, error, mail);</pre>
