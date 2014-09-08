@@ -38,28 +38,31 @@
 
       <config-file target="AndroidManifest.xml" parent="/manifest">
         <uses-permission android:name="android.permission.INTERNET"/>
-        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-        <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
         <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-        <uses-permission android:name="android.permission.GET_ACCOUNTS" />
       </config-file>
         <source-file src="src/android/Emailer.java" target-dir="src/com/ideateam/plugin" />
     </platform>
 
-  
-    <!-- ios
+   <!-- ios -->
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
-            <feature name="Echo">
-                <param name="ios-package" value="CDVEcho"/>
+            <feature name="Emailer">
+                <param name="ios-package" value="Emailer"/>
             </feature>
         </config-file>
-        <source-file src="src/ios/CDVEcho.m" />
+        
+        <header-file src ="src/Reachability.h" />
+        <source-file src ="src/Reachability.m" compiler-flags="-fno-objc-arc"/>
+        
+        <source-file src="src/Emailer.m" />
+ 
+       <framework src="libz.dylib" />
+       <framework src="MessageUI.framework" weak="true" />
+       <framework src="SystemConfiguration.framework" weak="true" />
+
+
     </platform>
-    -->
 
 </plugin>
