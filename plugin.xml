@@ -53,9 +53,7 @@
             </feature>
         </config-file>
         
-        <header-file src ="src/ios/Reachability.h" />
-        <source-file src ="src/ios/Reachability.m" compiler-flags="-fno-objc-arc"/>
-        
+       
         <source-file src="src/ios/Emailer.m" />
  
        <framework src="libz.dylib" />
