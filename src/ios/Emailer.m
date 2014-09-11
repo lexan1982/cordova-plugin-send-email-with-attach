@@ -49,12 +49,12 @@
     
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];*/
     
-    NSArray* args = [[command.arguments objectAtIndex:0] componentsSeparatedByString:@","];
+    NSMutableDictionary* args = [command.arguments objectAtIndex:0];
     
-    NSString* email = [args objectAtIndex:0];
-    NSString* subject = [args objectAtIndex:1];
-    NSString* text = [args objectAtIndex:2];
-    NSString* fileName = [args objectAtIndex:3];
+    NSString* email = [args objectForKey:@"mail"];
+    NSString* subject = [args objectForKey:@"subject"];
+    NSString* text = [args objectForKey:@"text"];
+    NSString* fileName = [args objectForKey:@"attachPath"];
     
     [self sendEmailTo:email withSubject:subject withText:text withFile:fileName];
 }
