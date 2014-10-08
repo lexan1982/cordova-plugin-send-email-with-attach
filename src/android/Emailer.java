@@ -19,6 +19,8 @@ under the License.
 
 package com.ideateam.plugin;
 
+import java.io.File;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
@@ -27,14 +29,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.util.Base64;
+import android.os.Environment;
 import android.util.Log;
 
 /**
@@ -101,14 +101,16 @@ public class Emailer extends CordovaPlugin {
     private void SendEmail(String email, String subject, String text, String attachFile){
     	
     	Log.d(TAG, ".." + email);
-    	Context context = this.cordova.getActivity().getApplicationContext();
-    	String attachPath = context.getFilesDir()+"/Documents/" + attachFile;
+    	String attachPath = Environment.getExternalStorageDirectory().getAbsolutePath() +"/UAR2015/" + attachFile;
+    	File file = new File(attachPath);
+    	Log.d(TAG, Uri.fromFile(file).toString());
+    	
     	
     	  Intent intent = new Intent(Intent.ACTION_SEND);    
     	  intent.setType("text/plain");      
     	  intent.putExtra(Intent.EXTRA_EMAIL, new String[] { email } );
     	  intent.putExtra(Intent.EXTRA_SUBJECT, subject);      
-    	  intent.putExtra(Intent.EXTRA_STREAM, Uri.parse(attachPath));      
+    	  intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));      
     	  intent.putExtra(Intent.EXTRA_TEXT, text);         
          
     	 
