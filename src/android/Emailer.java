@@ -55,9 +55,6 @@ public class Emailer extends CordovaPlugin {
     @SuppressLint("NewApi") 
     public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         if (action.equals("emailer")) {
-
-        	Log.d(TAG, "..action == emailer" );
-        	Log.d(TAG, args.getString(0));
         	
         	if(!isOnline()){
         		Log.d(TAG, ".. no internet connetion");
@@ -68,22 +65,15 @@ public class Emailer extends CordovaPlugin {
         		JSONObject obj = new JSONObject(args.getString(0));
         		
         		String mail = obj.getString("mail");
-        		Log.d(TAG, mail);
         		String subject = obj.getString("subject");
-        		Log.d(TAG, subject);
         		String text = obj.getString("text");
-        		Log.d(TAG, text);
         		String attachFile = obj.getString("attachFile");
-        		Log.d(TAG, attachFile);
         		
         		SendEmail(mail, subject, text, attachFile);
         		
-        		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Mail sended"));
-        		
-        	}
-        	
-        	
-          
+        		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Mail sended"));        		
+        	}      	
+        	          
         }  else {
             return false;
         }
@@ -100,11 +90,10 @@ public class Emailer extends CordovaPlugin {
     }
     private void SendEmail(String email, String subject, String text, String attachFile){
     	
-    	Log.d(TAG, ".." + email);
+
     	String attachPath = Environment.getExternalStorageDirectory().getAbsolutePath() +"/UAR2015/" + attachFile;
     	File file = new File(attachPath);
-    	Log.d(TAG, Uri.fromFile(file).toString());
-    	
+   	
     	
     	  Intent intent = new Intent(Intent.ACTION_SEND);    
     	  intent.setType("text/plain");      
