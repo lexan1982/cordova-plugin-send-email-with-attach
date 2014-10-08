@@ -65,8 +65,6 @@ public class Emailer extends CordovaPlugin {
         		 
         	}else{
         		
-        		
-        		
         		JSONObject obj = new JSONObject(args.getString(0));
         		
         		String mail = obj.getString("mail");
@@ -75,10 +73,10 @@ public class Emailer extends CordovaPlugin {
         		Log.d(TAG, subject);
         		String text = obj.getString("text");
         		Log.d(TAG, text);
-        		String attachPath = obj.getString("attachPath");
-        		Log.d(TAG, attachPath);
+        		String attachFile = obj.getString("attachFile");
+        		Log.d(TAG, attachFile);
         		
-        		SendEmail(mail, subject, text, attachPath);
+        		SendEmail(mail, subject, text, attachFile);
         		
         		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, "Mail sended"));
         		
@@ -100,9 +98,11 @@ public class Emailer extends CordovaPlugin {
     	  } else
     	   return true;
     }
-    private void SendEmail(String email, String subject, String text, String attachPath){
+    private void SendEmail(String email, String subject, String text, String attachFile){
     	
     	Log.d(TAG, ".." + email);
+    	Context context = this.cordova.getActivity().getApplicationContext();
+    	String attachPath = context.getFilesDir()+"/Documents/" + attachFile;
     	
     	  Intent intent = new Intent(Intent.ACTION_SEND);    
     	  intent.setType("text/plain");      
