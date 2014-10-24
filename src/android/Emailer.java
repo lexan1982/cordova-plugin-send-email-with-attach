@@ -35,6 +35,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.Html;
 import android.util.Log;
 
 /**
@@ -43,8 +44,7 @@ import android.util.Log;
 public class Emailer extends CordovaPlugin {
 
 	 private String TAG = "CordovaPlugin Emailer";
- 
-     
+    
      /**
      * Executes the request and returns PluginResult.
      *
@@ -100,7 +100,7 @@ public class Emailer extends CordovaPlugin {
     	  intent.putExtra(Intent.EXTRA_EMAIL, new String[] { email } );
     	  intent.putExtra(Intent.EXTRA_SUBJECT, subject);      
     	  intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));      
-    	  intent.putExtra(Intent.EXTRA_TEXT, text);         
+    	  intent.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(text));         
          
     	 
     	  this.cordova.getActivity().startActivity(Intent.createChooser(intent,
