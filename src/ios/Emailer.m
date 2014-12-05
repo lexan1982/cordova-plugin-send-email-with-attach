@@ -54,7 +54,7 @@
     NSString* email = [args objectForKey:@"mail"];
     NSString* subject = [args objectForKey:@"subject"];
     NSString* text = [args objectForKey:@"text"];
-    NSString* fileName = [args objectForKey:@"attachPath"];
+    NSString* fileName = [args objectForKey:@"fileName"];
     
     [self sendEmailTo:email withSubject:subject withText:text withFile:fileName];
 }
