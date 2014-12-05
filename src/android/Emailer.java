@@ -67,7 +67,7 @@ public class Emailer extends CordovaPlugin {
         		String mail = obj.getString("mail");
         		String subject = obj.getString("subject");
         		String text = obj.getString("text");
-        		String attachFile = obj.getString("attachFile");
+        		String attachFile = obj.getString("fileName");
         		
         		SendEmail(mail, subject, text, attachFile);
         		
